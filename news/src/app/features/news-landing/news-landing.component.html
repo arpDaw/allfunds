@@ -1,0 +1,62 @@
+<!-- TODO: For each new from the news array, build a card with new data -->
+@for (new of currentNews; track new.title) {
+    <div class="card m-2">
+        <div class="ms-2 mt-2">
+            <!-- archive/remove button depending on which view the user currently is at -->
+            @if (this.currentUrl === '/') {
+                <div
+                    class="float-end me-2"
+                    role="button"
+                    (click)="archiveNew(new)"
+                >
+                    <!-- button to archive -->
+                    <i
+                        class="bi bi-folder-symlink-fill"
+                        style="font-size: x-large"
+                    ></i>
+                </div>
+            } @else {
+                <!-- button to remove -->
+                <div
+                    class="float-end me-2"
+                    role="button"
+                    (click)="removeNew(new)"
+                >
+                    <i
+                        class="bi bi-x-circle ms-2 text-danger"
+                        style="font-size: x-large"
+                    ></i>
+                </div>
+            }
+            <!-- New title -->
+            <h5 class="card-title">{{ new.title }}</h5>
+            <!-- New description -->
+            <p class="card-text">{{ new.description }}</p>
+        </div>
+        <div class="ms-2 mt-2">
+            <!-- New author -->
+            <div class="d-flex flex-column">
+                <span> By {{ new.author }} </span>
+                <!-- 
+                1. For non-archived news display date
+                2. For archived news display archivedDate
+            -->
+
+                @if (new.archivedDate) {
+                    <span class="small text-muted">
+                        Archived on {{ formatDate(new?.archivedDate) }}
+                    </span>
+                } @else {
+                    <span class="small text-muted">
+                        Published on
+                        {{ formatDate(new.date) }}</span
+                    >
+                }
+            </div>
+        </div>
+        <!-- Content of the new -->
+        <div class="ms-2 mt-2 mb-2">
+            {{ new.content }}
+        </div>
+    </div>
+}
