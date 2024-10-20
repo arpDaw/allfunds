@@ -1,1 +1,1 @@
-export * from './lib/new-service';
+export * from './lib/news.service';

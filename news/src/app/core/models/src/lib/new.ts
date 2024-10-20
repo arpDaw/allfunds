@@ -1,8 +1,9 @@
 export interface New {
     title: string;
     description: string;
-    date: Date;
+    date: Date | string;
     content: string;
     author: string;
-    archivedDate?: Date;
+    archivedDate?: Date | string;
+    _id?: string;
 }
