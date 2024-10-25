@@ -1,4 +1,5 @@
 import { client } from './dbconnect.js';
+import { ObjectId } from 'mongodb';
 
 // Get all news from DB
 export const getNews = async (req, res) => {
@@ -17,14 +18,16 @@ export const getNews = async (req, res) => {
 
 // Delete new from DB
 export const deleteNew = async (req, res) => {
-    const newTitleToDelete = req.params.title;
+    const newIdToDelete = req.params.id;
     try {
         await client.connect();
         const collection = client.db('allfunds_test').collection('news');
-        // Delete element by title
-        const result = await collection.deleteOne({ title: newTitleToDelete });
+        // Delete element by id
+        const result = await collection.deleteOne({
+            _id: ObjectId.createFromHexString(newIdToDelete),
+        });
         // If one element was deleted, return response indicating the operation successfully executed
-        if (result.deletedCount === 1) {
+        if (result) {
             res.status(200).json({
                 message: 'Selected new deleted successfully',
             });
@@ -40,18 +43,19 @@ export const deleteNew = async (req, res) => {
 };
 
 export const updateNew = async (req, res) => {
+    const idToFind = req.params.id;
     const newToUpdate = req.body;
     try {
         await client.connect();
         const collection = client.db('allfunds_test').collection('news');
-        // use the title to find the element in db that has to be updated and pass the new state of said element
+        // use the document id to find the element in db that has to be updated and pass the new state of said element
 
-        const result = await collection.updateOne(
-            { title: newToUpdate.title },
+        const result = await collection.findOneAndUpdate(
+            { _id: ObjectId.createFromHexString(idToFind) },
             { $set: newToUpdate }
         );
 
-        if (result.modifiedCount === 1) {
+        if (result) {
             res.status(200).json({
                 message: 'New document was updated successfully',
             });

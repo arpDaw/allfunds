@@ -17,15 +17,16 @@ export class NewsService {
 
     archiveNew(newToArchive: New) {
         newToArchive.archivedDate = new Date().toDateString();
+        const id = newToArchive._id;
         delete newToArchive._id;
         return this.http
-            .put(`${this.newsApiUrl}/updateNew`, newToArchive)
+            .put(`${this.newsApiUrl}/news/${id}`, newToArchive)
             .subscribe({});
     }
 
-    deleteNew(newToDeleteTitle: string) {
+    deleteNew(newToDeleteId: string | undefined) {
         return this.http
-            .delete(`${this.newsApiUrl}/deleteNew/${newToDeleteTitle}`)
+            .delete(`${this.newsApiUrl}/news/${newToDeleteId}`)
             .subscribe({});
     }
 }

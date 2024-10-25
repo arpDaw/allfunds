@@ -50,17 +50,11 @@ export class NewsLandingComponent implements OnInit {
         );
     }
 
-    /* TODO: 
-      1. find element with ID instead of title    
-    */
     archiveNew(newToArchive: New) {
         this.newsService.archiveNew(newToArchive);
     }
 
-    /* TODO: 
-      1. find element with ID instead of title    
-    */
     deleteNew(newToDelete: New) {
-        this.newsService.deleteNew(newToDelete.title);
+        this.newsService.deleteNew(newToDelete._id);
     }
 }

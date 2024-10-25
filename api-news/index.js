@@ -29,8 +29,8 @@ app.use(express.json());
 
 // Endpoint routes
 app.get('/news', getNews);
-app.delete('/deleteNew/:title', deleteNew);
-app.put('/updateNew', updateNew);
+app.delete('/news/:id', deleteNew);
+app.put('/news/:id', updateNew);
 
 // Listen to the server on the specified port
 app.listen(PORT, () => {
