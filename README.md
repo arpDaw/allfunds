@@ -94,12 +94,12 @@ As for the <strong>database</strong> I used an atlas <strong>mongoDB</strong> cl
 <li>
 <strong>MongoDB Connection:</strong>
 <ul>
-<li><strong>connectionString</strong> will be provided in the <strong>secret.js</strong> file, which will be provided privately via email.</li>
-<li><strong>secret.js</strong> file should be placed in the <strong>api-news</strong> directory.</li>
+<li><strong>connectionString</strong> will be provided in the <strong>secret.js</strong> file, which contents shall be privately shared via email.</li>
+<li><strong>secret.js</strong> file must be placed in the <strong>api-news</strong> directory.</li>
 </ul>
 </li>
 </ol>
 
 If you reach this part and you've read everything, thanks for taking the time to do so.
 
-24/10/2024
+v 1.0 - 26/10/2024
