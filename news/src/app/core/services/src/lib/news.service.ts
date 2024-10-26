@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { New } from '@core/models';
 
 @Injectable({
@@ -9,10 +9,15 @@ import { New } from '@core/models';
 export class NewsService {
     newsApiUrl = 'http://localhost:9909';
 
+    currentNewsSubject$ = new BehaviorSubject<New[]>([]);
+
     constructor(private http: HttpClient) {}
 
-    getNews(): Observable<New[]> {
-        return this.http.get<New[]>(`${this.newsApiUrl}/news`);
+    getNews() {
+        return this.http.get<New[]>(`${this.newsApiUrl}/news`).subscribe({
+            next: (news) => this.currentNewsSubject$.next(news),
+            error: (err) => console.error(err),
+        });
     }
 
     archiveNew(newToArchive: New) {
@@ -26,7 +31,13 @@ export class NewsService {
 
     deleteNew(newToDeleteId: string | undefined) {
         return this.http
-            .delete(`${this.newsApiUrl}/news/${newToDeleteId}`)
-            .subscribe({});
+            .delete<{
+                message: string;
+                news: New[];
+            }>(`${this.newsApiUrl}/news/${newToDeleteId}`)
+            .subscribe({
+                next: (result) => this.currentNewsSubject$.next(result.news),
+                error: (err) => console.error(err),
+            });
     }
 }

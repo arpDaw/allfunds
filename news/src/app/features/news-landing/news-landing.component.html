@@ -1,4 +1,4 @@
-@if (currentNews | async; as news) {
+@if (currentNews$ | async; as news) {
     @for (new of news; track new.title) {
         <!-- Check if the new is archived or not -->
         @if (getTheProperNews(new)) {

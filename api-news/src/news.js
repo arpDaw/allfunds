@@ -7,7 +7,7 @@ export const getNews = async (req, res) => {
         await client.connect();
         const collection = client.db('allfunds_test').collection('news');
         const result = await collection.find().toArray();
-        res.json(result);
+        res.status(200).json(result);
     } catch (err) {
         console.error('Error:', err);
         res.status(500).send(err);
@@ -26,10 +26,12 @@ export const deleteNew = async (req, res) => {
         const result = await collection.deleteOne({
             _id: ObjectId.createFromHexString(newIdToDelete),
         });
+        const collectionAfterDelete = await collection.find().toArray();
         // If one element was deleted, return response indicating the operation successfully executed
         if (result) {
             res.status(200).json({
                 message: 'Selected new deleted successfully',
+                news: collectionAfterDelete,
             });
         } else {
             res.status(404).json({ message: 'News item not found' });

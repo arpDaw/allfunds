@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { New } from '@core/models';
 import { NewsService } from '@core/services';
 import { CommonModule } from '@angular/common';
-import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-news-landing',
@@ -13,7 +12,7 @@ import { Observable } from 'rxjs';
     styleUrl: './news-landing.component.scss',
 })
 export class NewsLandingComponent implements OnInit {
-    currentNews: Observable<New[]> = this.newsService.getNews();
+    currentNews$ = this.newsService.currentNewsSubject$;
 
     currentUrl: string = this.router.url;
 

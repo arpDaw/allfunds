@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Subscription } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { NewsService } from '@core/services';
@@ -17,7 +16,6 @@ export class AppComponent implements OnInit {
     title = 'news';
 
     urlParts: string[] = [];
-    routerSub: Subscription | undefined;
 
     constructor(
         private modalService: NgbModal,
@@ -36,7 +34,7 @@ export class AppComponent implements OnInit {
     }
 
     private getUrl() {
-        this.routerSub = this.router.events.subscribe((event) => {
+        this.router.events.subscribe((event) => {
             if (event instanceof NavigationEnd) {
                 const url = event.urlAfterRedirects;
                 this.urlParts = url.split('/');
